@@ -36,13 +36,17 @@ public class Todos {
   }
 
   public void appendTodo(String todo) throws IOException {
-    Files.write(file, Collections.singleton(System.lineSeparator()
-        + todo), StandardOpenOption.APPEND);
+    Files.write(file, Collections.singleton(todo),
+        StandardOpenOption.APPEND);
   }
 
-  public void removeLine(int lineNumber) throws IOException {
-    content.remove(lineNumber - 1);
-    Files.write(file,content);
+  public void removeLine(int lineNumber) throws Exception {
+    if (lineNumber > content.size() || lineNumber < 1) {
+      throw new Exception("Unable to remove: index is out of bound");
+    } else {
+      content.remove(lineNumber - 1);
+      Files.write(file, content);
+    }
   }
 
 }

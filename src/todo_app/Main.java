@@ -12,8 +12,7 @@ public class Main {
     if (args.length == 0) {
       System.out.println(usageInfo());
     } else if (args.length > 2) {
-      //TODO: Handle bad things
-      System.out.println(args);
+      System.out.println("Too much arguments");
     } else {
       try {
         parseArgs(args);
@@ -22,6 +21,7 @@ public class Main {
         ;
       }
     }
+
   }
 
   private static void parseArgs(String[] args) throws Exception {
@@ -40,8 +40,16 @@ public class Main {
       if (args.length == 1) {
         throw new Exception("Unable to remove: no index provided");
       } else {
-        todos.removeLine(Integer.parseInt(args[1]));
+        try {
+          int line = Integer.parseInt(args[1]);
+          todos.removeLine(line);
+        } catch (NumberFormatException e) {
+          throw new Exception("Unable to remove: index is not a number");
+        }
       }
+    } else {
+      System.out.println("Unsupported argument");
+      System.out.println(usageInfo());
     }
 
   }
