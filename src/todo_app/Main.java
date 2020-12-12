@@ -1,10 +1,10 @@
 package todo_app;
 
 public class Main {
-  private static Todos todos;
+  private static TodoList todos;
 
   public static void main(String[] args) throws Exception {
-    todos = new Todos("todos.txt");
+    todos = new TodoList("todos.txt");
     handleArgs(args);
   }
 
@@ -18,7 +18,6 @@ public class Main {
         parseArgs(args);
       } catch (Exception e) {
         System.out.println(e.getMessage());
-        ;
       }
     }
 
@@ -41,12 +40,24 @@ public class Main {
         throw new Exception("Unable to remove: no index provided");
       } else {
         try {
-          int line = Integer.parseInt(args[1]);
-          todos.removeLine(line);
+          int removeLine = Integer.parseInt(args[1]);
+          todos.removeTodo(removeLine);
         } catch (NumberFormatException e) {
           throw new Exception("Unable to remove: index is not a number");
         }
       }
+    } else if (args[0].equals("-c")) {
+      if (args.length == 1) {
+        throw new Exception("Unable to check: no index provided");
+      } else {
+        try {
+          int checkLine = Integer.parseInt(args[1]);
+          todos.checkTodo(checkLine);
+        } catch (NumberFormatException e) {
+          throw new Exception("Unable to remove: index is not a number");
+        }
+      }
+
     } else {
       System.out.println("Unsupported argument");
       System.out.println(usageInfo());
