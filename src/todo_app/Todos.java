@@ -4,16 +4,18 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.Collections;
 import java.util.List;
 
 public class Todos {
-  private Path file;
+  private final Path file;
   private List<String> content;
 
   public Todos(String filePath) {
-    this.file = Paths.get(filePath);
+    file = Paths.get(filePath);
     try {
-      this.content = Files.readAllLines(this.file);
+      this.content = Files.readAllLines(file);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -31,6 +33,16 @@ public class Todos {
     } else {
       return "No todos for today! :)";
     }
+  }
+
+  public void appendTodo(String todo) throws IOException {
+    Files.write(file, Collections.singleton(System.lineSeparator()
+        + todo), StandardOpenOption.APPEND);
+  }
+
+  public void removeLine(int lineNumber) throws IOException {
+    content.remove(lineNumber - 1);
+    Files.write(file,content);
   }
 
 }
