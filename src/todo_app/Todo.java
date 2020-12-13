@@ -21,10 +21,6 @@ public class Todo {
     return checked;
   }
 
-  public String getName() {
-    return name;
-  }
-
   @Override
   public String toString() {
     return isChecked() ? "[X] " + name : "[ ] " + name;
