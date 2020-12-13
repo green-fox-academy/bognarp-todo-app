@@ -17,9 +17,32 @@ public class TodoList {
     todos = new ArrayList<>();
 
     for (String line : lines) {
-      todos.add(new Todo(line));
+      if (isChecked(line)) {
+        if(isDone(line)) {
+          todos.add(new Todo(getTodoNameFromLine(line), true));
+        } else {
+          todos.add(new Todo(getTodoNameFromLine(line), false));
+        }
+      } else {
+        todos.add(new Todo(line));
+      }
     }
-    //TODO: We write state ([]/[X]) into the .txt but we don't read...
+  }
+
+  private String getTodoNameFromLine(String line) {
+    if (line.startsWith("[X] ") || line.startsWith("[ ] ")) {
+      return line.substring(4);
+    } else {
+      return line;
+    }
+  }
+
+  private boolean isChecked(String line) {
+    return line.startsWith("[X] ") || line.startsWith("[ ] ");
+  }
+
+  private boolean isDone(String line) {
+    return line.startsWith("[X] ");
   }
 
   private void writeToFile() throws IOException {

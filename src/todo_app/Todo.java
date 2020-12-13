@@ -8,6 +8,11 @@ public class Todo {
     this.name = name;
   }
 
+  public Todo(String name, boolean checked) {
+    this.name = name;
+    this.checked = checked;
+  }
+
   public void check() {
     checked = true;
   }
